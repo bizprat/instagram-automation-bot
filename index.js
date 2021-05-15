@@ -1,10 +1,12 @@
-const delay = require('delay')
+'use strict';
+
+const delay = require('delay');
 
 (async () => {
-	console.log('Before Delay')
+	console.log(process.env.INSTA_USERNAME)
 
 	await delay(3000);
 
 	// Executed 100 milliseconds later
-	console.log('After Delay')
+	console.log(process.env.INSTA_USERNAME)
 })()
