@@ -15,6 +15,7 @@
     "dotenv": "^9.0.2",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
+    "lowdb": "^1.0.0",
     "puppeteer": "^9.1.1",
     "user-agents": "^1.0.652"
   },
