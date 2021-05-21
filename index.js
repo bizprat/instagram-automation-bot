@@ -1,7 +1,8 @@
 'use strict';
 
-const delay = require('delay');
-const puppeteer = require('puppeteer');
+const chalk = require('chalk')
+const puppeteer = require('puppeteer')
+const figures = require('figures')
 
 const login  = require('./modules/login')
 
@@ -18,7 +19,9 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 		const page = await browser.newPage()
 		await page.setUserAgent(USER_AGENT)
 
-		login(page)
+		await login(page)
+
+		console.log("forward")
 
 	} catch(e) {
 		console.log(e)

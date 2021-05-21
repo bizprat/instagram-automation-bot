@@ -5,11 +5,11 @@ const pause = async (param) => {
     
     try {
         const obj = param || {}
-        const { min = 1, max = 15 } = obj
+        const { min = 2, max = 4 } = obj
 
         const time = Math.floor(Math.random() * (max - min) + min)
 
-        console.info( chalk.gray(`Waiting for ${time} sec`) )
+        console.info( chalk.gray(`Pause for ${time} sec`) )
         await delay(time * 1000)
 
     } catch(e) {
