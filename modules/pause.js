@@ -1,4 +1,5 @@
 const delay = require('delay');
+const chalk = require('chalk');
 
 const pause = async (param) => {
     
@@ -8,7 +9,7 @@ const pause = async (param) => {
 
         const time = Math.floor(Math.random() * (max - min) + min)
 
-        console.info(`Waiting for ${time} sec`)
+        console.info( chalk.gray(`Waiting for ${time} sec`) )
         await delay(time * 1000)
 
     } catch(e) {
