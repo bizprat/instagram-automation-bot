@@ -1,0 +1,10 @@
+{
+  "followed_users": [
+    {
+      "username": "abc",
+      "timestamp": 123456789
+    }
+  ],
+  "unfollowed_users": [],
+  "liked_posts": []
+}
