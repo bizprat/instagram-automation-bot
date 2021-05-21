@@ -1,8 +1,10 @@
 const delay = require('delay');
 
-const pause = async ({ min = 1, max = 15 }) => {
+const pause = async (param) => {
     
     try {
+        let obj = param || {}
+        const { min = 1, max = 15 } = obj
 
         let time = Math.floor(Math.random() * (max - min) + min)
 
