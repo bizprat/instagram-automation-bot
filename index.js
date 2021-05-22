@@ -1,8 +1,10 @@
 'use strict';
 
-const chalk = require('chalk')
 const puppeteer = require('puppeteer')
-const figures = require('figures')
+const path = require('path')
+
+// Set location of root directory as global variables
+global.appRoot = path.resolve(__dirname)
 
 const login  = require('./modules/login')
 
@@ -16,7 +18,7 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 			args: ['--no-sandbox', '--disable-setuid-sandbox', '--ignore-certificate-errors'] 
 		});
 
-		const page = await browser.newPage()
+		global.page = await browser.newPage()
 		await page.setUserAgent(USER_AGENT)
 
 		await login(page)
@@ -29,13 +31,3 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 
 
 })();
-
-
-// (async () => {
-// 	console.log(process.env.INSTA_USERNAME)
-
-// 	await delay(3000);
-
-// 	// Executed 100 milliseconds later
-// 	console.log(process.env.INSTA_USERNAME)
-// })()

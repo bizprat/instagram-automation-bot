@@ -5,7 +5,7 @@ const pause = async (param) => {
     
     try {
         const obj = param || {}
-        const { min = 2, max = 4 } = obj
+        const { min = 1, max = 1 } = obj
 
         const time = Math.floor(Math.random() * (max - min) + min)
 
