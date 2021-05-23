@@ -5,14 +5,13 @@ const { green, red } = require('chalk')
 const { tick, cross } = require('figures')
 
 const cookies = require(`./db.js`)
-const BASE_URL = `https://www.instagram.com`
 
 async function isLoggedIn() {
     try {
         
         await page.reload({ waitUntil: 'networkidle2' })
 
-        const isLoggedIn = !!await page.$('html.logged-in')
+        global.isLoggedIn = !!await page.$('html.logged-in')
 
         if ( !isLoggedIn ) {
             console.log( red(`${cross} Old session is not working.`) )

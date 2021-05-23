@@ -2,13 +2,17 @@
 
 const puppeteer = require('puppeteer')
 const path = require('path')
+const UserAgent = require('user-agents')
 
 // Set location of root directory as global variables
 global.appRoot = path.resolve(__dirname)
+global.BASE_URL = `https://www.instagram.com`
 
 const login  = require('./modules/login')
+const profile  = require('./modules/profile')
 
-const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36';
+const userAgent = new UserAgent({ deviceCategory: 'desktop' })
+const USER_AGENT = userAgent.toString();
 
 (async function(){
 	try {
@@ -21,9 +25,11 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 		global.page = await browser.newPage()
 		await page.setUserAgent(USER_AGENT)
 
-		await login(page)
+		await login()
 
-		console.log("forward")
+		await profile.getQueryHash() 
+
+		// await browser.close()
 
 	} catch(e) {
 		console.log(e)
