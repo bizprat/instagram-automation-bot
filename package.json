@@ -1,11 +1,16 @@
 {
-  "name": "instabot",
+  "name": "instabiz",
   "version": "1.0.0",
-  "description": "Instabot",
+  "description": "A Javascript based instagram automation bot. Instabiz can auto login, auto like posts, auto follow and unfollow profiles",
+  "keywords": ["instagram bot", "instabot", "autoliker", "autofollower"],
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bizprat/instagram-bot"
   },
   "author": "Prateek Anand",
   "license": "ISC",
