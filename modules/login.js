@@ -4,7 +4,7 @@ const pause = require('./pause')
 const { green, red } = require('chalk')
 const { tick, cross } = require('figures')
 
-const cookies = require(`${appRoot}/db.js`)
+const cookies = require(`./db.js`)
 const BASE_URL = `https://www.instagram.com`
 
 async function isLoggedIn() {
