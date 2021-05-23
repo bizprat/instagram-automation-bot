@@ -2,10 +2,54 @@
 
 const pause = require('./pause')
 const { green, red } = require('chalk')
-const { tick } = require('figures')
+const { tick, cross } = require('figures')
 
 const cookies = require(`${appRoot}/db.js`)
-const BASE_URL = `https://www.instagram.com`;
+const BASE_URL = `https://www.instagram.com`
+
+async function isLoggedIn() {
+    try {
+        
+        await page.reload({ waitUntil: 'networkidle2' })
+
+        const isLoggedIn = !!await page.$('html.logged-in')
+
+        if ( !isLoggedIn ) {
+            console.log( red(`${cross} Old session is not working.`) )
+            return isLoggedIn
+        }
+
+        console.log( green(`${tick} Logged in by old session`) )
+
+        await pause()
+
+        return isLoggedIn
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function loadSession() {
+    try {
+        console.log(`Try logging in with old session`)
+        const sessions = JSON.parse(await cookies.load())
+        
+        if (!sessions.length) {
+            console.log( red(`Previous session does not exist`) )
+            return false
+        }
+
+        for (const i in sessions) {
+            await page.setCookie(sessions[i])
+        }
+
+        return true
+
+    } catch (e) {
+        console.log(e)
+    }
+}
 
 async function saveDeviceInfo () {
     try {
@@ -22,7 +66,7 @@ async function saveDeviceInfo () {
         await page.waitForNavigation({ waitUntil: 'networkidle2' })
 
         console.log( green(`${tick} Device info saved`) )
-        pause()
+        await pause()
 
     } catch (e) {
         console.log(e)
@@ -39,12 +83,13 @@ async function turnOnPostNotification () {
             throw new Error(`There is no POST NOTIFICATION dialogure present`)
         }
 
-        console.log(`Trying to turn on post notification`)
+        console.log(`Turning on post notification`)
+        await pause({ max: 2 })
 
         await turnOnPostNotificationBtn[0].click()
 
         console.log( green(`${tick} Successfully turned on Post notification`) )
-        pause()
+        await pause()
 
     } catch(e) {
         console.log(e)
@@ -54,11 +99,20 @@ async function turnOnPostNotification () {
 async function login () {
     try {
         
+
         await page.goto(BASE_URL, { waitUntil: 'networkidle2' })
         await pause()
-        
-        let isLoggedIn = !!await page.$('svg[aria-label="Home"]')
-        console.log('Is already logged in? ', isLoggedIn)
+
+        await loadSession()
+
+        await pause()
+
+        if( await isLoggedIn() ) {
+            await turnOnPostNotification()
+            return true
+        }
+
+        console.log(`Trying logging in...`)
 
         const {INSTAGRAM_USERNAME: username, INSTAGRAM_PASSWORD: password} = process.env
 
