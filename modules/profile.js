@@ -23,4 +23,20 @@ async function getQueryHash() {
     }
 }
 
-module.exports = {getQueryHash}
+async function getUserData(username) {
+    try {
+        await page.goto( `${BASE_URL}/${username}` )
+        return await page.evaluate('window._sharedData.entry_data.ProfilePage[0].graphql.user')
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function getFollowers() {
+    return false
+}
+
+module.exports = {
+    getQueryHash,
+    getCurrentUser
+}
