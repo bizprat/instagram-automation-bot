@@ -27,9 +27,7 @@ const USER_AGENT = userAgent.toString();
 
 		await login()
 
-		// await profile.getQueryHash() 
-		// await profile.getCurrentUser() 
-		await profile.getFollowers('ekaumchannel') 
+		await profile.getFollowers('mygovindia') 
 
 		// await browser.close()
 
