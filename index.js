@@ -12,8 +12,7 @@ const { login }  = require('./modules/login')
 const profile  = require('./modules/profile')
 
 const userAgent = new UserAgent({ deviceCategory: 'desktop' })
-// const USER_AGENT = userAgent.toString();
-const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36';
+const USER_AGENT = userAgent.toString();
 
 (async function(){
 	try {

@@ -1,10 +1,5 @@
 'use strict'
 
-const pause = require('./pause')
-const { green, red } = require('chalk')
-const { tick, cross } = require('figures')
-const { loadSession } = require('./login')
-
 async function getQueryHash() {
     try {
         
@@ -23,11 +18,6 @@ async function getQueryHash() {
             let key = url.searchParams.get("query_hash")
             keys.push(key)
         }
-
-        // let url = BASE_URL + await page.evaluate(`document.querySelector('link[type="application/json"]').getAttribute('href')`)
-
-        // url = new URL(url)
-        // const queryHash = url.searchParams.get("query_hash")
 
         return keys
     } catch (e) {
