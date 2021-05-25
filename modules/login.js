@@ -142,4 +142,7 @@ async function login () {
 
 }
 
-module.exports = login
+module.exports = {
+    login,
+    loadSession
+}

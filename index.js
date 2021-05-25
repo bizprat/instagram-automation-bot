@@ -8,7 +8,7 @@ const UserAgent = require('user-agents')
 global.appRoot = path.resolve(__dirname)
 global.BASE_URL = `https://www.instagram.com`
 
-const login  = require('./modules/login')
+const { login }  = require('./modules/login')
 const profile  = require('./modules/profile')
 
 const userAgent = new UserAgent({ deviceCategory: 'desktop' })
@@ -28,8 +28,9 @@ const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 
 		await login()
 
-		await profile.getQueryHash() 
-		await profile.getCurrentUser() 
+		// await profile.getQueryHash() 
+		// await profile.getCurrentUser() 
+		await profile.getFollowers('ekaumchannel') 
 
 		// await browser.close()
 
