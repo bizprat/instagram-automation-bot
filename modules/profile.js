@@ -74,7 +74,7 @@ async function getFollowers(username, end_cursor = null) {
                 !user.node.followed_by_viewer &&
                 !user.node.follows_viewer &&
                 !user.node.requested_by_viewer 
-                ) {
+               ) {
                 return {
                     id: user.node.id,
                     username: user.node.username
@@ -99,7 +99,21 @@ async function getFollowers(username, end_cursor = null) {
     }
 }
 
+async function isPrivateProfile( username ) {
+    try {
+        if (!username) throw new Error('Pleave provide a valid username')
+
+        await page.goto(`${BASE_URL}/${username}`, { waitUntil: 'networkidle2' })
+
+        return !!await page.$('article h2')
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getUserinfo,
-    getFollowers
+    getFollowers,
+    isPrivateProfile
 }
