@@ -36,19 +36,20 @@ async function getUserinfo(username) {
     }
 }
 
-async function getFollowers(username) {
+async function getFollowers(username, end_cursor = null) {
     try {
         if (!username) throw new Error('Please provide username')
 
         let query_hash = '5aefa9893005572d237da5068082d8d5'
         const user = await getUserinfo(username)
-        const followersNum = 50
+        let next_page_token = null
 
         const variables = {
             id: user.id,
             include_reel: true,
             fetch_mutual: true,
-            first: 50
+            first: 50,
+            after: end_cursor
         }
 
         let url = new URL(`${BASE_URL}/graphql/query/`)
@@ -59,7 +60,39 @@ async function getFollowers(username) {
 
         const body = await response.json()
 
-        console.log(body.data.user.edge_followed_by.edges.length)
+        if (body.status !== 'ok') throw new Error(`getFollowers(): Invalid response from ${url.href}`)
+
+        if (body.data.user.edge_followed_by.page_info.has_next_page) {
+            next_page_token = body.data.user.edge_followed_by.page_info.end_cursor
+        }
+
+        // Filter out non-private and un-verified users
+        const filteredUsers = body.data.user.edge_followed_by.edges.filter(user => {
+            if (
+                !user.node.is_private && 
+                !user.node.is_verified &&
+                !user.node.followed_by_viewer &&
+                !user.node.follows_viewer &&
+                !user.node.requested_by_viewer 
+                ) {
+                return {
+                    id: user.node.id,
+                    username: user.node.username
+                }
+            }
+        })
+
+        const users = filteredUsers.map(user => {
+            return {
+                id: user.node.id,
+                username: user.node.username
+            }
+        })
+
+        return {
+            end_cursor: next_page_token,
+            users
+        }
 
     } catch (e) {
         console.log(e)

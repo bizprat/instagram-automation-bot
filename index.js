@@ -27,7 +27,8 @@ const USER_AGENT = userAgent.toString();
 
 		await login()
 
-		await profile.getFollowers('mygovindia') 
+		const users = await profile.getFollowers('mygovindia') 
+		console.log(users)
 
 		// await browser.close()
 
